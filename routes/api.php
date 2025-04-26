@@ -23,4 +23,4 @@ Route::apiResource('sales', SaleController::class);
 Route::apiResource('saleDetails', SaleDetailController::class);
 Route::apiResource('discounts', DiscountController::class);
 
-Route::put('/sales/calculate/{id}', [SaleController::class, 'calculateTotal']);
+Route::put('/sales/recalculate/{id}', [SaleController::class, 'Recalculate']);

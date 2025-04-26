@@ -58,7 +58,10 @@ class SaleController extends Controller
         return response()->json(null,204);
     }
 
-    public function calculateTotal(string $id)
+    /**
+     * Recalculate the sale total if a discount is applied or removed.
+     */
+    public function Recalculate(string $id)
     {
         return DB::transaction(function () use($id) 
         {
@@ -82,12 +85,18 @@ class SaleController extends Controller
 
                 $totalWithDiscount = $total * (1 - $percentage / 100);
 
-                $sale->update(['subtotal'=>$total,'total'=>$totalWithDiscount]);
+                $sale->update([
+                    'subtotal'=>$total,
+                    'total'=>$totalWithDiscount
+                ]);
                 
             }
             else
             {   
-                $sale->update(['subtotal'=>$total ,'total'=>$total]);
+                $sale->update([
+                    'subtotal'=>$total,
+                    'total'=>$total
+                ]);
             }
 
 

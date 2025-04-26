@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSaleDetailRequest;
+use App\Http\Requests\UpdateSaleDetailRequest;
 use App\Models\Product;
 use App\Models\SaleDetail;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,33 @@ class SaleDetailController extends Controller
     {
         $saleDetail=SaleDetail::find($id);
         return response()->json($saleDetail->load(['sale','product']));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateSaleDetailRequest $request, string $id)
+    {
+        $saleDetail=SaleDetail::find($id);
+        if($request->has('product_id') && $request->has('quantity'))
+        {
+            $product=Product::find($request->product_id);
+            $subtotal=$request->quantity * $product->price;
+        }
+        else if ($request->has('product_id'))
+        {
+            $product=Product::find($request->product_id);
+            $subtotal=$saleDetail->quantity * $product->price;
+        }
+        else
+        {
+            $subtotal=$request->quantity * $saleDetail->product->price;
+        }
+        $saleDetail->update([
+            'product_id'=>$request->product_id ?? $saleDetail->product_id,
+            'quantity'=>$request->quantity ?? $saleDetail->quantity,
+            'subtotal'=>$subtotal
+        ]);
     }
     
     /**
