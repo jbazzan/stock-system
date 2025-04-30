@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use Illuminate\Http\Request;
@@ -22,5 +23,6 @@ Route::apiResource('clients', ClientController::class);
 Route::apiResource('sales', SaleController::class);
 Route::apiResource('saleDetails', SaleDetailController::class);
 Route::apiResource('discounts', DiscountController::class);
+Route::apiResource('roles', RoleController::class);
 
 Route::put('/sales/recalculate/{id}', [SaleController::class, 'Recalculate']);
