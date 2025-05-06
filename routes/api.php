@@ -18,6 +18,25 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+    Route::get('/users', [AuthController::class, 'getAllUsers']);
+    Route::get('/users/{id}', [AuthController::class, 'getUser']);
+    Route::put('/users/{id}', [AuthController::class, 'updateUser']);
+    Route::delete('/users/{id}', [AuthController::class, 'destroy']);
+    Route::get('/sales/by-client/{client_id}', [SaleController::class, 'getSalesByClient']);
+
+
+/* Path group to classify the functionality of different roles.
+
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
+    
+});
+
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
+    
+}); 
+
+*/
+
 Route::apiResource('products', ProductController::class);
 Route::apiResource('clients', ClientController::class);
 Route::apiResource('sales', SaleController::class);
