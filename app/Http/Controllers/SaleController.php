@@ -78,7 +78,7 @@ class SaleController extends Controller
     /**
      * Recalculate the sale total if a discount is applied or removed.
      */
-    public function Recalculate(string $id)
+    public function recalculate(string $id)
     {
         return DB::transaction(function () use($id) 
         {

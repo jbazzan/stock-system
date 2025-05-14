@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
     
 });
 
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
+Route::middleware(['auth:sanctum', 'role:seller'])->group(function(){
     
 }); 
 
@@ -43,5 +43,4 @@ Route::apiResource('sales', SaleController::class);
 Route::apiResource('saleDetails', SaleDetailController::class);
 Route::apiResource('discounts', DiscountController::class);
 Route::apiResource('roles', RoleController::class);
-
 Route::put('/sales/recalculate/{id}', [SaleController::class, 'Recalculate']);
