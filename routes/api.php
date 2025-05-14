@@ -10,37 +10,23 @@ use App\Http\Controllers\SaleDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/create', [AuthController::class, 'createUser']);
+
 Route::post('/login', [AuthController::class, 'loginUser']);
+Route::apiResource('saleDetails', SaleDetailController::class);
 
 Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('/create', [AuthController::class, 'createUser']);
     Route::get('/user', function (Request $request) {return $request->user();});
     Route::post('/logout', [AuthController::class, 'logout']);
-});
-
+    Route::apiResource('products', ProductController::class);
+    Route::apiResource('clients', ClientController::class);
+    Route::apiResource('sales', SaleController::class);
+    Route::apiResource('discounts', DiscountController::class);
+    Route::apiResource('roles', RoleController::class);
     Route::get('/users', [AuthController::class, 'getAllUsers']);
     Route::get('/users/{id}', [AuthController::class, 'getUser']);
     Route::put('/users/{id}', [AuthController::class, 'updateUser']);
     Route::delete('/users/{id}', [AuthController::class, 'destroy']);
     Route::get('/sales/by-client/{client_id}', [SaleController::class, 'getSalesByClient']);
-
-
-/* Path group to classify the functionality of different roles.
-
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function(){
-    
+    Route::put('/sales/recalculate/{id}', [SaleController::class, 'Recalculate']);
 });
-
-Route::middleware(['auth:sanctum', 'role:seller'])->group(function(){
-    
-}); 
-
-*/
-
-Route::apiResource('products', ProductController::class);
-Route::apiResource('clients', ClientController::class);
-Route::apiResource('sales', SaleController::class);
-Route::apiResource('saleDetails', SaleDetailController::class);
-Route::apiResource('discounts', DiscountController::class);
-Route::apiResource('roles', RoleController::class);
-Route::put('/sales/recalculate/{id}', [SaleController::class, 'Recalculate']);
